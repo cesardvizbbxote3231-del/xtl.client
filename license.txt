@@ -1,0 +1,8 @@
+TÉRMINOS DE USO - XTL CLIENT
+
+1. XTL Client es un launcher no oficial para Minecraft: Java Edition. No está afiliado, respaldado ni patrocinado por Mojang Studios ni Microsoft. Minecraft es marca de sus propietarios.
+2. Para jugar en servidores premium necesitas una cuenta original de Microsoft con Minecraft: Java Edition. El inicio de sesión se hace en la ventana segura de Microsoft; este programa no ve tu contraseña.
+3. El modo sin premium es solo para un jugador y servidores que lo permitan.
+4. Los mods se descargan desde Modrinth y pertenecen a sus autores; revisa la licencia de cada uno.
+5. El programa se entrega "tal cual", sin garantías. Úsalo bajo tu responsabilidad.
+6. Al continuar con la instalación aceptas estos términos.

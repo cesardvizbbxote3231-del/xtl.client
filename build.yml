@@ -1,0 +1,38 @@
+# Compila XTL Client para Windows, macOS y Linux en la nube de GitHub y publica sumas SHA-256 para que cualquiera pueda verificar las descargas.
+# Firma de código: añade los secretos WIN_CSC_LINK y WIN_CSC_KEY_PASSWORD (ver docs/FIRMA-DIGITAL.md). Sin ellos el instalador sale SIN firmar.
+name: Crear instaladores XTL Client
+on: { workflow_dispatch: {}, push: { branches: [main] } }
+jobs:
+  tests:                      # informativa: no bloquea la compilación
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm test
+  build:
+    strategy:
+      matrix: { os: [windows-latest, macos-latest, ubuntu-latest] }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm install
+      - run: npx electron-builder --publish never
+        env:
+          CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
+      - name: Sumas SHA256 (transparencia)
+        shell: bash
+        run: |
+          cd dist && for f in *.exe *.dmg *.AppImage; do [ -f "$f" ] && (sha256sum "$f" 2>/dev/null || shasum -a 256 "$f") >> SHA256SUMS.txt; done; cat SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: XTL-Client-${{ matrix.os }}
+          path: |
+            dist/*.exe
+            dist/*.dmg
+            dist/*.AppImage
+            dist/SHA256SUMS.txt

@@ -2,27 +2,27 @@
   "name": "xtl-client",
   "productName": "XTL Client",
   "version": "1.0.0",
-  "description": "XTL Client - Launcher y cliente de Minecraft Java con perfiles aislados, mods y modpacks",
+  "description": "XTL Client - Launcher de Minecraft Java con cuentas Microsoft, perfiles, mods y modpacks",
   "author": "XTL",
+  "license": "UNLICENSED",
   "main": "main.js",
-  "scripts": { "start": "electron .", "dist": "electron-builder --win", "dist:mac": "electron-builder --mac", "dist:linux": "electron-builder --linux" },
-  "dependencies": {
-    "adm-zip": "^0.5.10",
-    "electron-updater": "^6.3.0",
-    "minecraft-launcher-core": "^3.18.0",
-    "msmc": "^5.0.0"
+  "scripts": {
+    "start": "electron .", "test": "node --test test/backend.test.js", "test:ui": "node test/ui.test.js",
+    "dist": "electron-builder --win", "dist:mac": "electron-builder --mac", "dist:linux": "electron-builder --linux"
   },
+  "dependencies": { "electron-updater": "^6.3.0", "minecraft-launcher-core": "^3.18.0" },
   "devDependencies": { "electron": "^31.0.0", "electron-builder": "^24.13.3" },
   "build": {
     "appId": "com.xtl.client",
     "productName": "XTL Client",
+    "copyright": "Copyright © 2026 XTL. XTL Client no es un producto oficial de Minecraft ni está afiliado a Mojang ni a Microsoft.",
     "compression": "maximum",
     "asar": true,
     "asarUnpack": ["assets/**"],
     "electronLanguages": ["es", "es-419", "en-US"],
-    "files": ["main.js", "preload.js", "index.html", "assets/**", "package.json"],
+    "files": ["main.js", "preload.js", "src/**", "assets/**", "package.json"],
     "publish": [{ "provider": "generic", "url": "https://actualizaciones.ejemplo.com/xtl-client" }],
-    "win": { "target": "nsis", "icon": "build/icon.ico" },
+    "win": { "target": "nsis", "icon": "build/icon.ico", "legalTrademarks": "Minecraft es marca de Mojang Studios / Microsoft" },
     "mac": { "target": [{ "target": "dmg", "arch": ["x64", "arm64"] }], "category": "public.app-category.games", "icon": "build/icon.png" },
     "linux": { "target": "AppImage", "category": "Game", "icon": "build/icon.png" },
     "nsis": {

@@ -1,0 +1,23 @@
+{
+  "presets": {
+    "perf": ["fps", "menu"],
+    "pvp": ["fps", "keys", "armor", "zoom", "f3", "menu"],
+    "survival": ["fps", "mini", "appleskin", "zoom", "tweaks", "f3", "menu"]
+  },
+  "modules": [
+    { "id": "fps", "cat": "Rendimiento", "name": "Impulso de FPS", "desc": "Sodium, Lithium, FerriteCore, Entity Culling, ImmediatelyFast y Dynamic FPS.", "mods": [{"s":"sodium"},{"s":"lithium"},{"s":"ferrite-core"},{"s":"entityculling"},{"s":"immediatelyfast"},{"s":"dynamic-fps"}] },
+    { "id": "fpsx", "cat": "Rendimiento", "name": "Opciones extra de video", "desc": "Sodium Extra: contador de FPS y más ajustes gráficos.", "mods": [{"s":"sodium-extra"}] },
+    { "id": "shaders", "cat": "Rendimiento", "name": "Shaders", "desc": "Iris: shaders compatibles con Sodium.", "mods": [{"s":"iris"}] },
+    { "id": "keys", "cat": "Interfaz", "name": "Keystrokes y CPS", "desc": "Muestra tus teclas y clics por segundo en pantalla.", "mods": [{"q":"keystrokes cps"}] },
+    { "id": "armor", "cat": "Interfaz", "name": "Estado de armadura", "desc": "Durabilidad de armadura y objetos en pantalla.", "mods": [{"q":"armor status hud"}] },
+    { "id": "f3", "cat": "Interfaz", "name": "F3 mejorado", "desc": "BetterF3: coordenadas e información más clara.", "mods": [{"s":"betterf3"}] },
+    { "id": "mini", "cat": "Interfaz", "name": "Minimapa", "desc": "Xaero's Minimap con coordenadas y puntos de ruta.", "mods": [{"s":"xaeros-minimap"}] },
+    { "id": "appleskin", "cat": "Interfaz", "name": "AppleSkin", "desc": "Saturación y comida visibles en la barra de hambre.", "mods": [{"s":"appleskin"}] },
+    { "id": "zoom", "cat": "Cámara", "name": "Zoom", "desc": "Zoomify: acerca la vista con una tecla.", "mods": [{"s":"zoomify"}] },
+    { "id": "freelook", "cat": "Cámara", "name": "Freelook", "desc": "Mira alrededor sin cambiar hacia dónde apuntas.", "mods": [{"q":"freelook perspective"}] },
+    { "id": "menu", "cat": "Utilidades", "name": "Menú de mods en juego", "desc": "Mod Menu: configura tus mods desde dentro del juego.", "mods": [{"s":"modmenu"}] },
+    { "id": "tweaks", "cat": "Utilidades", "name": "Mouse Tweaks", "desc": "Mueve objetos en el inventario más rápido.", "mods": [{"s":"mouse-tweaks"}] },
+    { "id": "replay", "cat": "Utilidades", "name": "Replay Mod", "desc": "Graba y reproduce tus partidas en cámara libre.", "mods": [{"s":"replaymod"}] },
+    { "id": "chat", "cat": "Utilidades", "name": "Chat sin reportes", "desc": "No Chat Reports: desactiva la firma de mensajes.", "mods": [{"s":"no-chat-reports"}] }
+  ]
+}
