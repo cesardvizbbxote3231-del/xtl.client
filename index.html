@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><title>XTL Client</title>
+<style>
+:root{--bg:#0a0c11;--side:#0d1016;--card:#12161e;--line:#1e2430;--fg:#eaeef7;--mut:#8590a6;--acc:#6ea8ff;--acc2:#7cf5c4;--red:#ff7a85}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;height:100vh;display:grid;grid-template-columns:210px 1fr;color:var(--fg);font:15px/1.5 system-ui,sans-serif;overflow:hidden;
+ background:radial-gradient(640px circle at 0 0,rgba(110,168,255,.10),transparent 60%),radial-gradient(640px circle at 100% 100%,rgba(124,245,196,.07),transparent 60%),var(--bg)}
+aside{padding:24px 14px;display:flex;flex-direction:column;border-right:1px solid var(--line);background:rgba(13,16,22,.7)}
+.logo{font:900 1.3rem system-ui;letter-spacing:-.03em;margin:0 10px 26px}.logo i{color:var(--acc);font-style:normal;font-weight:700}
+nav{position:relative;display:flex;flex-direction:column;gap:2px}
+nav #ind{position:absolute;left:0;top:0;width:3px;height:40px;border-radius:3px;background:linear-gradient(var(--acc),var(--acc2));transition:transform .3s cubic-bezier(.3,1.3,.5,1)}
+nav button{all:unset;box-sizing:border-box;height:40px;padding:0 16px;display:flex;align-items:center;border-radius:10px;color:var(--mut);cursor:pointer;font-weight:600;transition:color .2s,padding .2s}
+nav button:hover{color:var(--fg);padding-left:20px}nav button.on{color:var(--fg);background:rgba(255,255,255,.04)}
+#chip{margin-top:auto;padding:10px;font-size:.82rem;color:var(--mut)}
+main{display:flex;flex-direction:column;min-width:0;height:100vh}
+#top{display:flex;justify-content:space-between;align-items:center;padding:14px 32px;border-bottom:1px solid var(--line);position:relative;z-index:20}
+#top h2{margin:0;font:800 1.25rem system-ui;letter-spacing:-.02em}
+.accwrap{position:relative}.accbtn{display:flex;gap:10px;align-items:center;padding:6px 12px 6px 6px;border:1px solid var(--line);border-radius:12px;background:var(--card);cursor:pointer;font-weight:600}
+.accbtn img,.who img{width:28px;height:28px;border-radius:6px;image-rendering:pixelated;background:var(--line)}
+#accmenu{position:absolute;right:0;top:calc(100% + 8px);min-width:250px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px;box-shadow:0 18px 40px -12px #000;animation:rise .2s}
+.mi{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:9px;cursor:pointer}.mi:hover{background:rgba(255,255,255,.05)}.mi.on{background:rgba(110,168,255,.12)}
+.mi img{width:26px;height:26px;border-radius:6px;image-rendering:pixelated}.mi small{margin-left:auto;color:var(--mut)}
+main>section{flex:1;overflow:auto;padding:30px 32px}main>section.in{animation:rise .35s ease-out}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}}
+h1{font:900 clamp(2.4rem,5.5vw,4.2rem)/1 system-ui;letter-spacing:-.05em;margin:0 0 16px}h3{margin:24px 0 12px;font-size:.9rem;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.hero h1{background:linear-gradient(135deg,#fff 30%,var(--acc));-webkit-background-clip:text;background-clip:text;color:transparent}.kick{color:var(--acc);font-weight:800;letter-spacing:.2em;font-size:.8rem;margin-bottom:10px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+input,select{background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font:inherit;outline:none;transition:border-color .2s}
+input:focus,select:focus{border-color:var(--acc)}input[type=search]{flex:1;min-width:200px}input[type=range]{flex:1;padding:0;accent-color:var(--acc)}
+.b{background:var(--acc);color:#07101f;border:0;border-radius:12px;padding:10px 18px;font:700 .95rem system-ui;cursor:pointer;transition:transform .15s,box-shadow .2s}
+.b:hover{transform:translateY(-2px);box-shadow:0 8px 24px -8px var(--acc)}.b:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
+.b.g{background:var(--card);color:var(--fg);border:1px solid var(--line)}.b.r{background:transparent;color:var(--red);border:1px solid var(--line)}.b.s{padding:6px 12px;font-size:.85rem}
+.seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:3px;flex-wrap:wrap}
+.seg button{all:unset;padding:7px 14px;border-radius:9px;cursor:pointer;color:var(--mut);font-weight:600;font-size:.9rem}.seg button.on{background:var(--acc);color:#07101f}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:26px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px;animation:rise .4s both;animation-delay:calc(var(--i,0)*35ms);transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);border-color:var(--acc)}.card .top{display:flex;gap:12px;align-items:center}
+.card img.ic,.ph{width:46px;height:46px;border-radius:12px;background:var(--line);flex:none}
+.card h4{margin:0;font-size:1.02rem}.card p{margin:0;color:var(--mut);font-size:.88rem;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.big{font:800 1.5rem system-ui;letter-spacing:-.03em}.acts{display:flex;gap:8px;flex-wrap:wrap}.tag,.note{color:var(--mut);font-size:.85rem}.note{margin:8px 0 0}
+.pill{display:inline-block;padding:1px 9px;border-radius:99px;border:1px solid var(--line);font-size:.76rem;color:var(--acc);text-transform:capitalize}
+.box{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+.jr{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}.jr:last-child{border:0}
+.jr>span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis}.who{display:flex;gap:10px;align-items:center}.off{opacity:.45;text-decoration:line-through}
+.sw input{display:none}.sw i{display:block;width:46px;height:26px;border-radius:13px;background:#242b3a;position:relative;cursor:pointer;transition:background .2s}
+.sw i::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .2s}
+.sw input:checked+i{background:var(--acc)}.sw input:checked+i::after{transform:translateX(20px)}.sw input:disabled+i{opacity:.5;cursor:wait}
+#lb{display:flex;gap:16px;align-items:center;padding:12px 32px;border-top:1px solid var(--line);background:rgba(13,16,22,.85)}
+#lbl{flex:1;min-width:0;font-size:.82rem;color:var(--mut)}#log{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar{height:3px;background:var(--line);border-radius:3px;margin-top:6px;overflow:hidden}.fill{height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .25s}
+#sel{min-width:220px}#play{min-width:150px;font-size:1.05rem;padding:12px 28px;background:linear-gradient(135deg,var(--acc),var(--acc2))}
+#ob{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center}
+#ob .c{width:min(580px,90vw);animation:rise .4s}#ob .c>div{animation:rise .35s}
+.st{display:inline-block;width:44px;height:4px;border-radius:4px;background:var(--line);margin-right:8px;transition:background .4s}.st.on{background:var(--acc)}
+#ob a{color:var(--mut);cursor:pointer;text-decoration:underline;font-size:.9rem}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<aside><div class="logo">XTL<i> CLIENT</i></div>
+<nav><i id="ind"></i><button data-v="home" class="on">Inicio</button><button data-v="profiles">Perfiles</button><button data-v="mods">Módulos</button><button data-v="explore">Explorar</button><button data-v="set">Ajustes</button></nav>
+<div id="chip"><span id="ramtxt"></span></div></aside>
+<main>
+<div id="top"><h2 id="pt">Inicio</h2>
+ <div class="accwrap"><div class="accbtn" id="acc"><img id="acci" alt="" hidden><span id="accn">Sin cuenta</span><span class="tag">▾</span></div><div id="accmenu" hidden></div></div></div>
+
+<section id="home" class="in"><div class="hero"><div class="kick">XTL CLIENT</div><h1>Rápido.<br>Ligero.<br>Tuyo.</h1>
+ <p class="tag" style="max-width:46ch">Perfiles aislados, mods en un clic, varias cuentas y Java automático. Elige un perfil abajo y pulsa JUGAR.</p></div>
+ <div class="g3" id="stats"></div></section>
+
+<section id="profiles" hidden>
+ <h3 style="margin-top:0">Nuevo perfil</h3>
+ <div class="row"><span class="tag">Preajuste</span><div class="seg" id="ps"></div></div>
+ <div class="row"><div class="seg" data-t="nv"><button data-f="release" class="on">Versiones</button><button data-f="snapshot">Snapshots</button><button data-f="old">Antiguas</button></div></div>
+ <div class="row"><input id="nn" placeholder="Nombre del perfil" value="Mi perfil"><select id="nv"></select>
+  <select id="nl"><option value="vanilla">Vanilla</option><option value="fabric">Fabric</option><option value="forge">Forge</option><option value="neoforge">NeoForge</option></select>
+  <button class="b" id="mk">Crear perfil</button><button class="b g" id="imp">Importar .mrpack</button></div>
+ <p class="tag" style="margin-top:-4px">Los preajustes (Rendimiento, PvP, Survival+) usan Fabric e instalan sus módulos solos. Cada perfil tiene sus propios mundos, mods y ajustes.</p>
+ <h3>Tus perfiles</h3><div class="grid" id="plist"></div></section>
+
+<section id="mods" hidden>
+ <div class="row"><select id="mi"></select><div class="seg" id="mt"><button data-t="M" class="on">Módulos</button><button data-t="F">Archivos</button></div></div>
+ <div id="mM"></div><div id="mF" class="box" hidden></div></section>
+
+<section id="explore" hidden>
+ <div class="row"><div class="seg" id="et"><button data-t="mods" class="on">Mods</button><button data-t="packs">Modpacks</button></div>
+  <select id="ei"></select><select id="el" hidden><option value="all">Todos los loaders</option><option>fabric</option><option>forge</option><option>neoforge</option></select>
+  <input type="search" id="eq" placeholder="Buscar en Modrinth…"></div><div class="grid" id="eres"></div></section>
+
+<section id="set" hidden>
+ <h3 style="margin-top:0">Cuentas</h3><div class="box"><div id="alist"></div>
+  <div class="row" style="margin:14px 0 0"><button class="b" id="addp">Agregar cuenta Microsoft (premium)</button><input id="on" placeholder="Nombre sin premium" maxlength="16"><button class="b g" id="addo">Agregar sin premium</button></div>
+  <p class="note">Sin premium sirve para un jugador y servidores que lo permitan. Los servidores premium requieren cuenta original.</p></div>
+ <h3>Memoria y rendimiento</h3><div class="box">
+  <div class="row"><input type="range" id="ram" min="1024" step="512"><b id="ramv" style="min-width:60px"></b><button class="b g s" id="detect">Detectar recomendada</button></div>
+  <p class="note" id="recv"></p>
+  <label class="row" style="margin:12px 0 0;gap:12px;cursor:pointer"><span class="sw"><input type="checkbox" id="jvm"><i></i></span><span>Argumentos de Java optimizados (G1GC)</span></label>
+  <label class="row" style="margin:12px 0 0;gap:12px;cursor:pointer"><span class="sw"><input type="checkbox" id="lite"><i></i></span><span>Modo ligero: cerrar la ventana del launcher mientras juegas</span></label></div>
+ <h3>Java</h3><div class="box"><div class="row"><span>Versión a usar</span><select id="jsel"><option value="auto">Automática (recomendado)</option><option value="8">Java 8</option><option value="17">Java 17</option><option value="21">Java 21</option><option value="25">Java 25</option></select></div><div id="jl"></div></div></section>
+
+<div id="lb"><div id="lbl"><div id="log">Listo.</div><div class="bar"><div class="fill" id="fill"></div></div></div>
+ <select id="sel"></select><button class="b" id="play">JUGAR</button></div>
+</main>
+
+<div id="ob" hidden><div class="c">
+ <p style="display:flex;justify-content:space-between"><span><i class="st on"></i><i class="st"></i><i class="st"></i></span><a id="oClose">Omitir</a></p>
+ <div id="o1"><div class="kick">XTL CLIENT</div><h1>Bienvenido.</h1>
+  <p class="tag">Inicia sesión con tu cuenta Microsoft de Minecraft. Se abre la ventana segura de Microsoft: tu contraseña nunca pasa por este programa.</p>
+  <div class="row"><button class="b" id="oLogin">Iniciar sesión con Microsoft</button></div><a id="oSkip">Jugar sin premium</a>
+  <div class="row" id="oOff" hidden style="margin-top:14px"><input id="oName" placeholder="Tu nombre de jugador" maxlength="16"><button class="b" id="oUse">Continuar</button></div></div>
+ <div id="o2" hidden><h1 id="oHi">Hola.</h1><p class="tag">Elige cómo quieres empezar. Podrás cambiarlo después en Perfiles.</p>
+  <div class="row"><div class="seg" id="ops"><button data-p="perf" class="on">Rendimiento</button><button data-p="pvp">PvP</button><button data-p="survival">Survival+</button><button data-p="none">Vanilla</button></div></div>
+  <div class="row"><select id="ov"></select><button class="b" id="oInstall">Instalar cliente</button></div></div>
+ <div id="o3" hidden><h1 id="oTitle">Instalando…</h1><div class="bar" style="height:5px"><div class="fill" id="oFill"></div></div>
+  <div class="row" style="margin-top:22px"><button class="b" id="oGo" hidden style="font-size:1.3rem;padding:16px 56px">JUGAR</button></div></div>
+ <p class="tag" id="oLog" style="min-height:24px;margin-top:14px"></p>
+</div></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],api=window.api;
+let P=[],S={},A={list:[],active:null},cur='',VERS=[],mt='M',et='mods',preset='perf',oPreset='perf',running=false;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const msg=e=>String(e.message||e).replace(/^Error invoking remote method '[^']+': Error: /,'');
+function say(t){$('#log').textContent=t;$('#oLog').textContent=t}
+const guard=async fn=>{try{await fn()}catch(e){say('Error: '+msg(e))}};
+const skin=(n,s=64)=>`https://minotar.net/helm/${encodeURIComponent(n)}/${s}.png`;
+function setRun(r){running=r;$('#play').disabled=r;$('#play').textContent=r?'LANZADO':'JUGAR'}
+api.on('log',say);api.on('game',s=>setRun(s==='running'));
+api.on('prog',p=>{const w=(p.total?Math.round(p.cur/p.total*100):0)+'%';$('#fill').style.width=w;$('#oFill').style.width=w;say((p.label||'')+' '+p.cur+'/'+p.total)});
+
+/* Navegación */
+const TITLES={home:'Inicio',profiles:'Perfiles',mods:'Módulos',explore:'Explorar',set:'Ajustes'};
+function view(v){
+ $$('main>section').forEach(s=>{const on=s.id===v;s.hidden=!on;if(on){s.classList.remove('in');void s.offsetWidth;s.classList.add('in')}});
+ $$('nav button').forEach(b=>{const on=b.dataset.v===v;b.classList.toggle('on',on);if(on)$('#ind').style.transform=`translateY(${b.offsetTop}px)`});
+ $('#pt').textContent=TITLES[v];
+ if(v==='mods')guard(refreshMods);if(v==='explore')guard(explore);if(v==='set')guard(loadS);if(v==='home')renderHome();
+}
+$$('nav button').forEach(b=>b.onclick=()=>view(b.dataset.v));
+
+/* Versiones (todas las de Mojang) */
+const vtype=id=>(VERS.find(v=>v.id===id)||{}).type||'release';
+function fillVers(sel,f){sel.innerHTML=VERS.filter(v=>f==='old'?v.type.startsWith('old'):v.type===f).map(v=>`<option>${esc(v.id)}</option>`).join('')}
+$$('.seg[data-t]').forEach(seg=>seg.onclick=e=>{const b=e.target.closest('button');if(!b)return;seg.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));fillVers($('#'+seg.dataset.t),b.dataset.f)});
+
+/* Cuentas (selector estilo Lunar) */
+async function loadA(){A=await api.invoke('acc:list');const a=A.list.find(x=>x.id===A.active);
+ $('#accn').textContent=a?a.name:'Iniciar sesión';$('#acci').hidden=!a;if(a)$('#acci').src=skin(a.name,40);
+ $('#accmenu').innerHTML=A.list.map(x=>`<div class="mi${x.id===A.active?' on':''}" data-id="${esc(x.id)}"><img src="${skin(x.name,32)}" alt=""><span>${esc(x.name)}</span><small>${x.type==='premium'?'premium':'sin premium'}</small></div>`).join('')+'<div class="mi" data-id="_cfg">Administrar cuentas…</div>';
+ $('#alist').innerHTML=A.list.length?A.list.map(x=>`<div class="jr"><span class="who"><img src="${skin(x.name,32)}" alt="">${esc(x.name)} <span class="pill">${x.type==='premium'?'premium':'sin premium'}</span>${x.id===A.active?' <span class="tag">· activa</span>':''}</span><span class="acts">${x.id===A.active?'':`<button class="b g s" data-u="${esc(x.id)}">Usar</button>`}<button class="b r s" data-r="${esc(x.id)}">Quitar</button></span></div>`).join(''):'<p class="tag" style="margin:0">Sin cuentas todavía.</p>';
+ renderHome()}
+$('#acc').onclick=e=>{if(e.target.closest('#accmenu'))return;$('#accmenu').hidden=!$('#accmenu').hidden};
+document.addEventListener('click',e=>{if(!e.target.closest('.accwrap'))$('#accmenu').hidden=true});
+$('#accmenu').onclick=e=>{const m=e.target.closest('.mi');if(!m)return;$('#accmenu').hidden=true;
+ if(m.dataset.id==='_cfg')return view('set');guard(async()=>{await api.invoke('acc:switch',m.dataset.id);await loadA();say('Cuenta cambiada ✓')})};
+$('#alist').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.u)guard(async()=>{await api.invoke('acc:switch',b.dataset.u);await loadA()});
+ if(b.dataset.r&&confirm('¿Quitar esta cuenta del launcher?'))guard(async()=>{await api.invoke('acc:remove',b.dataset.r);await loadA()})};
+$('#addp').onclick=()=>guard(async()=>{say('Abriendo Microsoft…');await api.invoke('acc:premium');await loadA();say('Cuenta añadida ✓')});
+$('#addo').onclick=()=>guard(async()=>{await api.invoke('acc:offline',$('#on').value);$('#on').value='';await loadA();say('Cuenta sin premium añadida ✓')});
+
+/* Ajustes */
+async function loadS(){S=await api.invoke('set:get');
+ $('#ram').max=S.maxRam;$('#ram').value=S.ram;$('#ramv').textContent=S.ram/1024+' GB';$('#ramtxt').textContent='RAM '+S.ram/1024+' GB';
+ $('#recv').textContent=`Tu PC tiene ${S.totalGB} GB. Recomendado: ${S.recRam/1024} GB.`;$('#jsel').value=S.java;$('#lite').checked=S.lite;$('#jvm').checked=S.jvmOpt;
+ const js=await api.invoke('java:list');
+ $('#jl').innerHTML=js.map(j=>`<div class="jr"><span>Java ${j.v}</span>${j.installed?'<span class="tag">Instalado ✓</span>':`<button class="b g s" data-j="${j.v}">Instalar</button>`}</div>`).join('');renderHome()}
+$('#jl').onclick=e=>{const b=e.target.closest('button');if(b)guard(async()=>{b.disabled=true;b.textContent='Instalando…';await api.invoke('java:install',+b.dataset.j);loadS()})};
+$('#ram').oninput=()=>$('#ramv').textContent=$('#ram').value/1024+' GB';
+$('#ram').onchange=()=>guard(async()=>{await api.invoke('set:save',{ram:+$('#ram').value});loadS()});
+$('#detect').onclick=()=>guard(async()=>{await api.invoke('set:save',{ram:S.recRam});await loadS();say('Memoria ajustada a '+S.ram/1024+' GB ✓')});
+$('#jsel').onchange=()=>api.invoke('set:save',{java:$('#jsel').value});
+$('#lite').onchange=()=>api.invoke('set:save',{lite:$('#lite').checked});$('#jvm').onchange=()=>api.invoke('set:save',{jvmOpt:$('#jvm').checked});
+
+/* Inicio */
+function renderHome(){const p=P.find(x=>x.name===cur),a=A.list.find(x=>x.id===A.active);
+ $('#stats').innerHTML=`<div class="card"><span class="tag">Perfil activo</span><div class="big">${p?esc(p.name):'—'}</div><span class="tag">${p?`${esc(p.mc)} · ${esc(p.loader)} · ${p.mods} mods`:'Crea uno en Perfiles'}</span></div>
+ <div class="card"><span class="tag">Memoria</span><div class="big">${S.ram?S.ram/1024+' GB':'—'}</div><span class="tag">Ajustable en Ajustes</span></div>
+ <div class="card"><span class="tag">Cuenta</span><div class="big">${a?esc(a.name):'—'}</div><span class="tag">${a?(a.type==='premium'?'Premium ✓':'Sin premium'):'Inicia sesión arriba'}</span></div>`}
+
+/* Perfiles */
+const PRESETS=[['perf','Rendimiento'],['pvp','PvP'],['survival','Survival+'],['none','Vacío']];
+$('#ps').innerHTML=PRESETS.map(([k,n])=>`<button data-p="${k}"${k===preset?' class="on"':''}>${n}</button>`).join('');
+$('#ps').onclick=e=>{const b=e.target.closest('button');if(!b)return;preset=b.dataset.p;$$('#ps button').forEach(x=>x.classList.toggle('on',x===b));if(preset!=='none')$('#nl').value='fabric'};
+$('#nl').value='fabric';
+async function load(){P=await api.invoke('inst:list');if(!P.find(i=>i.name===cur))cur=P[0]?P[0].name:'';
+ const opt=l=>l.map(i=>`<option value="${esc(i.name)}"${i.name===cur?' selected':''}>${esc(i.name)} · ${esc(i.mc)} ${esc(i.loader)}</option>`).join('');
+ $('#sel').innerHTML=opt(P)||'<option value="">Sin perfiles</option>';$('#mi').innerHTML=opt(P.filter(i=>i.loader!=='vanilla'));$('#ei').innerHTML=opt(P.filter(i=>i.loader!=='vanilla'));
+ $('#plist').innerHTML=P.length?P.map((i,k)=>`<div class="card" style="--i:${k}"><h4>${esc(i.name)}</h4><div><span class="pill">${esc(i.loader)}</span> <span class="tag">${esc(i.mc)} · ${i.mods} mods</span></div>
+  <div class="acts"><button class="b s" data-a="play" data-k="${k}">Jugar</button><button class="b g s" data-a="mods" data-k="${k}">Mods</button><button class="b g s" data-a="open" data-k="${k}">Carpeta</button><button class="b g s" data-a="dup" data-k="${k}">Duplicar</button><button class="b r s" data-a="del" data-k="${k}">Borrar</button></div></div>`).join(''):'<p class="tag">Aún no tienes perfiles.</p>';renderHome()}
+$('#sel').onchange=()=>{cur=$('#sel').value;renderHome()};
+$('#plist').onclick=e=>{const b=e.target.closest('button');if(!b)return;const i=P[b.dataset.k],a=b.dataset.a;
+ if(a==='play'){cur=i.name;play(i.name)}
+ if(a==='mods'){cur=i.name;load().then(()=>view('mods'))}
+ if(a==='open')api.invoke('inst:open',i.name);
+ if(a==='dup')guard(async()=>{await api.invoke('inst:dup',i.name);await load();say('Perfil duplicado ✓')});
+ if(a==='del'&&confirm('¿Borrar "'+i.name+'" y todos sus archivos?'))guard(async()=>{await api.invoke('inst:delete',i.name);load()})};
+$('#mk').onclick=()=>guard(async()=>{const b=$('#mk'),id=$('#nv').value;b.disabled=true;try{say('Creando perfil '+id+'…');const n=await api.invoke('inst:create',{name:$('#nn').value,mc:id,vtype:vtype(id),loader:$('#nl').value,preset});cur=n;await load()}finally{b.disabled=false}});
+$('#imp').onclick=()=>guard(async()=>{say('Elige un archivo .mrpack…');const n=await api.invoke('pack:import');if(n){cur=n;await load();say('Modpack importado ✓')}});
+async function play(n){if(!n){say('Crea un perfil primero');return view('profiles')}
+ if(!A.active){$('#accmenu').hidden=true;return view('set')}
+ $('#play').disabled=true;await guard(async()=>{say('Preparando '+n+'…');await api.invoke('play',n);say('Juego iniciado ✓')});if(!running)$('#play').disabled=false}
+$('#play').onclick=()=>play($('#sel').value);
+
+/* Módulos (estilo Lunar) y archivos */
+$('#mi').onchange=()=>{cur=$('#mi').value;guard(refreshMods)};
+$('#mt').onclick=e=>{const b=e.target.closest('button');if(!b)return;mt=b.dataset.t;$$('#mt button').forEach(x=>x.classList.toggle('on',x===b));guard(refreshMods)};
+async function refreshMods(){const i=P.find(x=>x.name===cur&&x.loader!=='vanilla');$('#mM').hidden=mt!=='M';$('#mF').hidden=mt!=='F';
+ if(!i){const t='<p class="tag" style="margin:0">Crea un perfil con Fabric, Forge o NeoForge para usar mods.</p>';$('#mM').innerHTML=t;$('#mF').innerHTML=t;return}
+ if(mt==='M'){if(i.loader!=='fabric'){$('#mM').innerHTML='<p class="tag">Los módulos requieren un perfil Fabric. En este perfil usa la pestaña Archivos o Explorar.</p>';return}
+  const L=await api.invoke('mod:list',i.name);let h='',cat='';
+  L.forEach(m=>{if(m.cat!==cat){cat=m.cat;h+=`<h3>${esc(cat)}</h3>`}
+   h+=`<div class="box" style="margin-bottom:8px"><div class="jr" style="padding:0;border:0"><span><b>${esc(m.name)}</b><br><span class="tag">${esc(m.desc)}</span></span><label class="sw"><input type="checkbox" data-m="${esc(m.id)}"${m.on?' checked':''}><i></i></label></div></div>`});
+  $('#mM').innerHTML=h+'<p class="note">Los módulos instalan mods de Modrinth en este perfil. Si un mod no existe para tu versión de Minecraft, se omite.</p>'}
+ else{const l=await api.invoke('mods:list',i.name);
+  $('#mF').innerHTML=l.length?l.map((m,k)=>`<div class="jr"><span class="${m.on?'':'off'}">${esc(m.file.replace(/\.disabled$/,''))}</span><span class="acts"><button class="b g s" data-t="${k}">${m.on?'Desactivar':'Activar'}</button><button class="b r s" data-x="${k}">Quitar</button></span></div>`).join(''):'<p class="tag" style="margin:0">Este perfil no tiene mods.</p>';
+  $('#mF').onclick=e=>{const b=e.target.closest('button');if(!b)return;const m=l[b.dataset.t??b.dataset.x];
+   guard(async()=>{await api.invoke(b.dataset.t!=null?'mods:toggle':'mods:remove',{inst:i.name,file:m.file});await load();refreshMods()})}}}
+$('#mM').onchange=e=>{const c=e.target.closest('input[data-m]');if(!c)return;c.disabled=true;
+ guard(async()=>{say((c.checked?'Instalando':'Desactivando')+' módulo…');await api.invoke('mod:set',{inst:cur,id:c.dataset.m,on:c.checked});say('Listo ✓');await load()}).then(refreshMods)};
+
+/* Explorar (Modrinth) */
+function show(el,list,label,fn){el.innerHTML=list.length?list.map((m,k)=>`<div class="card" style="--i:${k}"><div class="top">${m.icon?`<img class="ic" src="${esc(m.icon)}" alt="">`:'<div class="ph"></div>'}<div><h4>${esc(m.title)}</h4><span class="tag">${m.dl.toLocaleString('es-CO')} descargas</span></div></div><p>${esc(m.desc)}</p><button class="b s" data-k="${k}">${label}</button></div>`).join(''):'<p class="tag">Sin resultados.</p>';
+ el.onclick=e=>{const b=e.target.closest('button');if(b)guard(async()=>{b.disabled=true;b.textContent='Instalando…';await fn(list[b.dataset.k]);b.textContent='Instalado ✓'})}}
+async function explore(){$('#ei').hidden=et!=='mods';$('#el').hidden=et!=='packs';
+ if(et==='mods'){const i=P.find(x=>x.name===$('#ei').value);if(!i){$('#eres').innerHTML='<p class="tag">Crea primero un perfil con Fabric, Forge o NeoForge.</p>';return}
+  show($('#eres'),await api.invoke('mr:search',{q:$('#eq').value,type:'mod',mc:i.mc,loader:i.loader}),'Instalar',m=>api.invoke('mr:mod',{id:m.id,inst:i.name}).then(load))}
+ else show($('#eres'),await api.invoke('mr:search',{q:$('#eq').value,type:'modpack',loader:$('#el').value}),'Instalar modpack',async m=>{await api.invoke('mr:pack',{id:m.id,title:m.title});say('Modpack listo ✓ Está en tus perfiles.');load()})}
+$('#et').onclick=e=>{const b=e.target.closest('button');if(!b)return;et=b.dataset.t;$$('#et button').forEach(x=>x.classList.toggle('on',x===b));guard(explore)};
+let tq;$('#eq').oninput=()=>{clearTimeout(tq);tq=setTimeout(()=>guard(explore),350)};$('#ei').onchange=()=>guard(explore);$('#el').onchange=()=>guard(explore);
+
+/* Bienvenida interactiva */
+function ob(n){['o1','o2','o3'].forEach((id,i)=>$('#'+id).hidden=i!==n-1);$$('.st').forEach((s,i)=>s.classList.toggle('on',i<n))}
+function hi(){const a=A.list.find(x=>x.id===A.active);$('#oHi').textContent='Hola, '+(a?a.name:'jugador')+'.'}
+$('#oClose').onclick=()=>$('#ob').hidden=true;
+$('#oLogin').onclick=()=>guard(async()=>{const b=$('#oLogin');b.disabled=true;b.textContent='Esperando a Microsoft…';say('');
+ try{await api.invoke('acc:premium');await loadA();hi();ob(2)}finally{b.disabled=false;b.textContent='Iniciar sesión con Microsoft'}});
+$('#oSkip').onclick=()=>$('#oOff').hidden=false;
+$('#oUse').onclick=()=>guard(async()=>{await api.invoke('acc:offline',$('#oName').value);await loadA();hi();ob(2)});
+$('#ops').onclick=e=>{const b=e.target.closest('button');if(!b)return;oPreset=b.dataset.p;$$('#ops button').forEach(x=>x.classList.toggle('on',x===b))};
+$('#oInstall').onclick=async()=>{const id=$('#ov').value;ob(3);$('#oTitle').textContent='Instalando…';$('#oFill').style.width='0%';
+ try{const n=await api.invoke('inst:create',{name:'Mi perfil',mc:id,vtype:vtype(id),loader:oPreset==='none'?'vanilla':'fabric',preset:oPreset});
+  cur=n;await load();$('#oTitle').textContent='Todo listo';$('#oFill').style.width='100%';$('#oGo').hidden=false}
+ catch(e){ob(2);say('Error: '+msg(e))}};
+$('#oGo').onclick=()=>{$('#ob').hidden=true;play(cur)};
+
+(async()=>{await loadA();await loadS();await load();$('#ind').style.transform='translateY(0)';setRun(await api.invoke('game:state'));
+ await guard(async()=>{VERS=await api.invoke('mc:versions');fillVers($('#nv'),'release');fillVers($('#ov'),'release')});
+ if(!A.list.length||!P.length){$('#ob').hidden=false;if(A.list.length){hi();ob(2)}else ob(1)}})();
+</script></body></html>
